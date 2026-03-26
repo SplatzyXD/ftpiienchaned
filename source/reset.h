@@ -28,6 +28,10 @@ u8 reset();
 
 void set_reset_flag();
 
+void set_power_flag();
+
+void set_reboot_flag();
+
 void initialise_reset_buttons();
 
 void die(char *msg, int errnum);
