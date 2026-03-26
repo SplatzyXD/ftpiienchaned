@@ -7,22 +7,32 @@ ftpii uses the `devkitPPC` toolchain and the `libogc` library.
 
 1.  **devkitPro**: Install devkitPro via the automated installers provided on their website (https://devkitpro.org/wiki/Getting_Started).
 2.  **devkitPPC & libogc**: During installation, ensure you select the components to install `devkitPPC` and `libogc`.
-3.  **Environment Variables**: Ensure `DEVKITPRO` and `DEVKITPPC` are set in your environment. For example, on Linux:
+
+## Building on Windows (Easiest)
+
+If you installed devkitPro to the default location (`C:\devkitPro`), a batch script is provided for your convenience.
+
+1. Double-click the `build.bat` file in the project's root directory.
+2. It will automatically detect your `devkitPPC` environment variables and run `make`.
+3. If successful, this will produce `ftpii.elf` and `ftpii.dol` in the project root directory.
+
+## Building from Command Line (Linux/macOS/Windows)
+
+If you prefer building manually or are on a different operating system:
+
+1. Open a terminal (or MSYS2 environment if on Windows).
+2. Ensure `DEVKITPRO` and `DEVKITPPC` are set in your environment. For example, on Linux:
     ```bash
     export DEVKITPRO=/opt/devkitpro
     export DEVKITPPC=/opt/devkitpro/devkitPPC
     ```
     On Windows, the devkitPro installer usually sets these automatically (e.g., `C:\devkitPro` and `C:\devkitPro\devkitPPC`).
-
-## Building from Command Line
-
-1. Open a terminal (or MSYS2 environment if on Windows).
-2. Navigate to the root directory of the ftpii repository.
-3. Run `make`:
+3. Navigate to the root directory of the ftpii repository.
+4. Run `make`:
     ```bash
     make
     ```
-4. To clean the build artifacts, run `make clean`.
+5. To clean the build artifacts, run `make clean`.
 
 If successful, this will produce `ftpii.elf` and `ftpii.dol` in the project root directory.
 
