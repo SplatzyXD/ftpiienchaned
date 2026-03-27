@@ -16,20 +16,20 @@ PRELOADER_LDFLAGS	= -L$(LIBOGC_LIB) -logc -g $(MACHDEP) -Wl,-Map,$(notdir $@).ma
 
 ifneq ($(BUILD),$(notdir $(CURDIR)))
 
-export OUTPUT	:= $(CURDIR)/$(TARGET)
-export VPATH	:= $(foreach dir,$(SOURCES),$(CURDIR)/$(dir))
-export DEPSDIR	:= $(CURDIR)/$(BUILD)
+export OUTPUT	:= ../$(TARGET)
+export VPATH	:= $(foreach dir,$(SOURCES),../$(dir))
+export DEPSDIR	:= .
 export LD		:= $(CC)
 
 export OFILES			:= reset.o dvd.o pad.o net.o fs.o ftp.o loader.o vrt.o dol.o ftpii.o
 export PRELOADER_OFILES	:= _$(TARGET).dol.o dol.o preloader.o
-export INCLUDE			:= -I$(CURDIR)/$(BUILD) -I$(LIBOGC_INC)
+export INCLUDE			:= -I. -I$(LIBOGC_INC)
 
 .PHONY: $(BUILD) clean run
 
 $(BUILD):
 	@[ -d $@ ] || mkdir -p $@
-	@$(MAKE) --no-print-directory -C $(BUILD) -f "$(CURDIR)/Makefile"
+	@$(MAKE) --no-print-directory -C $(BUILD) -f ../Makefile
 
 clean:
 	@rm -rf $(BUILD) $(TARGET).dol $(TARGET).elf
