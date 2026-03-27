@@ -29,7 +29,7 @@ export INCLUDE			:= -I$(CURDIR)/$(BUILD) -I$(LIBOGC_INC)
 
 $(BUILD):
 	@[ -d $@ ] || mkdir -p $@
-	@$(MAKE) --no-print-directory -C $(BUILD) -f $(CURDIR)/Makefile
+	@$(MAKE) --no-print-directory -C $(BUILD) -f "$(CURDIR)/Makefile"
 
 clean:
 	@rm -rf $(BUILD) $(TARGET).dol $(TARGET).elf
