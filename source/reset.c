@@ -31,6 +31,7 @@ misrepresented as being the original software.
 
 static volatile bool _reset = false;
 static volatile bool _power = false;
+static volatile bool _reboot = false;
 
 u8 reset() {
     return _reset;
@@ -40,9 +41,14 @@ void set_reset_flag() {
     _reset = true;
 }
 
-static void set_power_flag() {
+void set_power_flag() {
     _reset = true;
     _power = true;
+}
+
+void set_reboot_flag() {
+    _reset = true;
+    _reboot = true;
 }
 
 void initialise_reset_buttons() {
@@ -57,6 +63,7 @@ bool check_reset_synchronous() {
 
 void maybe_poweroff() {
     if (_power) SYS_ResetSystem(SYS_POWEROFF, 0, 0);
+    else if (_reboot) SYS_ResetSystem(SYS_RESTART, 0, 0);
 }
 
 void die(char *msg, int errnum) {

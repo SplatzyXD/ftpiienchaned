@@ -592,8 +592,26 @@ static s32 dispatch_to_handler(client_t *client, char *cmd_line, const char **co
     return handlers[i](client, rest);
 }
 
-static const char *site_commands[] = { "LOADER", "CLEAR", "CHMOD", "PASSWD", "NOPASSWD", "EJECT", "MOUNT", "UNMOUNT", "LOAD", NULL };
-static const ftp_command_handler site_handlers[] = { ftp_SITE_LOADER, ftp_SITE_CLEAR, ftp_SITE_CHMOD, ftp_SITE_PASSWD, ftp_SITE_NOPASSWD, ftp_SITE_EJECT, ftp_SITE_MOUNT, ftp_SITE_UNMOUNT, ftp_SITE_LOAD, ftp_SITE_UNKNOWN };
+static s32 ftp_SITE_SHUTDOWN(client_t *client, char *rest) {
+    s32 result = write_reply(client, 200, "Shutting down.");
+    set_power_flag();
+    return result;
+}
+
+static s32 ftp_SITE_REBOOT(client_t *client, char *rest) {
+    s32 result = write_reply(client, 200, "Rebooting.");
+    set_reboot_flag();
+    return result;
+}
+
+static s32 ftp_SITE_INFO(client_t *client, char *rest) {
+    char msg[FTP_BUFFER_SIZE];
+    sprintf(msg, "ftpii system info: MEM1 %u bytes, MEM2 %u bytes.", SYS_GetArena1Size(), SYS_GetArena2Size());
+    return write_reply(client, 200, msg);
+}
+
+static const char *site_commands[] = { "LOADER", "CLEAR", "CHMOD", "PASSWD", "NOPASSWD", "EJECT", "MOUNT", "UNMOUNT", "LOAD", "SHUTDOWN", "REBOOT", "INFO", NULL };
+static const ftp_command_handler site_handlers[] = { ftp_SITE_LOADER, ftp_SITE_CLEAR, ftp_SITE_CHMOD, ftp_SITE_PASSWD, ftp_SITE_NOPASSWD, ftp_SITE_EJECT, ftp_SITE_MOUNT, ftp_SITE_UNMOUNT, ftp_SITE_LOAD, ftp_SITE_SHUTDOWN, ftp_SITE_REBOOT, ftp_SITE_INFO, ftp_SITE_UNKNOWN };
 
 static s32 ftp_SITE(client_t *client, char *cmd_line) {
     return dispatch_to_handler(client, cmd_line, site_commands, site_handlers);

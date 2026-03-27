@@ -6,13 +6,13 @@ endif
 
 include $(DEVKITPPC)/wii_rules
 
-TARGET	= ftpii
-SOURCES	= source
-BUILD	= build
+TARGET	:= ftpii
+SOURCES	:= source
+BUILD	:= build
 
-CFLAGS				= -g -O2 -Wall $(MACHDEP) $(INCLUDE)
-LDFLAGS				= -L$(LIBOGC_LIB) -lntfs -lseeprom -lotp -lisfs -lnandimg -lfst -lwod -liso -ldi -lwiiuse -lbte -lfat -logc -lm -g $(MACHDEP) -Wl,-Map,$(notdir $@).map,--section-start,.init=0x80a00000
-PRELOADER_LDFLAGS	= -L$(LIBOGC_LIB) -logc -g $(MACHDEP) -Wl,-Map,$(notdir $@).map
+CFLAGS	:= -g -O2 -Wall $(MACHDEP)
+LDFLAGS	:= -L$(LIBOGC_LIB) -lntfs -lseeprom -lotp -lisfs -lnandimg -lfst -lwod -liso -ldi -lwiiuse -lbte -lfat -logc -lm -g $(MACHDEP) -Wl,-Map,$(TARGET).map,--section-start,.init=0x80a00000
+PRELOADER_LDFLAGS := -L$(LIBOGC_LIB) -logc -g $(MACHDEP) -Wl,-Map,$(TARGET).map
 
 ifneq ($(BUILD),$(notdir $(CURDIR)))
 
@@ -29,7 +29,7 @@ export INCLUDE			:= -I$(CURDIR)/$(BUILD) -I$(LIBOGC_INC)
 
 $(BUILD):
 	@[ -d $@ ] || mkdir -p $@
-	@$(MAKE) --no-print-directory -C $(BUILD) -f $(CURDIR)/Makefile
+	@$(MAKE) --no-print-directory -C $(BUILD) -f "$(CURDIR)/Makefile"
 
 clean:
 	@rm -rf $(BUILD) $(TARGET).dol $(TARGET).elf
@@ -50,7 +50,7 @@ $(OUTPUT).elf: $(PRELOADER_OFILES)
 
 _$(TARGET).elf: $(OFILES)
 
-DEPENDS = $(OFILES:.o=.d) $(PRELOADER_OFILES:.o=.d)
+DEPENDS := $(OFILES:.o=.d) $(PRELOADER_OFILES:.o=.d)
 -include $(DEPENDS)
 
 endif
