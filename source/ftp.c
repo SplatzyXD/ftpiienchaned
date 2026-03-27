@@ -33,7 +33,6 @@ misrepresented as being the original software.
 #include <sys/fcntl.h>
 #include <unistd.h>
 
-#include "dvd.h"
 #include "ftp.h"
 #include "fs.h"
 #include "loader.h"
@@ -549,8 +548,7 @@ static s32 ftp_SITE_NOPASSWD(client_t *client, char *rest) {
 }
 
 static s32 ftp_SITE_EJECT(client_t *client, char *rest) {
-    if (dvd_eject()) return write_reply(client, 550, "Unable to eject DVD.");
-    return write_reply(client, 200, "DVD ejected.");
+    return write_reply(client, 550, "DVD support is disabled.");
 }
 
 static s32 ftp_SITE_MOUNT(client_t *client, char *path) {
